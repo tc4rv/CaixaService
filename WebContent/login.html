@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Logar no Sistema</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+	<h3 class="text-center">Logar no Banco</h3>
+	
+	<section class="container">
+		<form action="Controller.do" method="post">
+			<div>
+				<label for="agency">Agencia</label>
+				<input type="text" name="agency" id="agency" placeholder="Agencia" required="required" class="form-control" />
+			</div>
+			
+			<div>
+				<label for="account">Conta</label>
+				<input type="text" name="account" id="account" placeholder="Conta" required="required" class="form-control" />
+			</div>
+			
+			<div>
+				<label for="pass">Senha</label>
+				<input type="password" name="pass" id="pass" placeholder="Senha" required="required" class="form-control" />
+			</div>
+			
+			<div>
+				<button class="btn btn-success" type="submit" name="command" id="logar" value="Logar">Logar</button>
+				<button class="btn btn-default" type="reset" name="reset" id="reset" value="reset">Limpar Campos</button>
+			</div>
+		</form>
+	</section>
+		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js" type="text/javascript" />
+	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript" />
+</body>
+</html>
