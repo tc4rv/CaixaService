@@ -48,7 +48,10 @@ create table if not exists Log
 ) default charset = utf8 engine = InnoDB;
 
 insert into Cliente values (1, 'ThiGusto', '012345678');
+insert into Cliente values (2, 'GustoThi', '123456789');
+
 insert into Conta values (12345, 100, 1);
+insert into Conta values (12346, 100, 2);
 
 select * from Cliente;
 select * from Conta;

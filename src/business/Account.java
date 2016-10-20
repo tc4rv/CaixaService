@@ -36,8 +36,26 @@ public class Account
 		
 		client = new Client(accTO);
 	}
+	
+	private Account(String ag, String acco){
+		agency = ag;
+		account = acco;
+		
+		AccountTO accTO = new AccountTO();
+		accTO.setAccount(acco);
+		
+		client = new Client(accTO);
+	}
 
-	public void updateBalance(double value) throws InsufficientFundsException
+	public void transfer(AccountTO accTO, double value) throws InsufficientFundsException, 
+															   AccountNotFoundException
+	{
+		updateBalance(-value, "2");
+		Account accTransfer = toTransfer(accTO);
+		accTransfer.updateBalance(value, "2");
+	}
+	
+	public void updateBalance(double value, String operacao) throws InsufficientFundsException
 	{
 		if(value > 0)
 			balance += value;
@@ -57,9 +75,13 @@ public class Account
 		log.setAccount(account);
 		log.setAgency(agency);
 		log.setClient(client.getId());
-		log.setOperaction("0");
+		log.setOperaction(operacao);
 		log.setValue(value);
 		log.saveLog();
+	}
+	
+	public void updateBalance(double value) throws InsufficientFundsException{
+		updateBalance(value, "0");
 	}
 	
 	public void withdraw(double value) throws InsufficientFundsException, DispenserEmptyException
@@ -94,6 +116,18 @@ public class Account
 	public static Account currentAccount()
 	{
 		return acc;
+	}
+	
+	private Account toTransfer(AccountTO accTO) throws AccountNotFoundException
+	{
+		AccountDAO accDAO = new AccountDAO();
+		AccountTO accTOt = accDAO.loadAccount(accTO.getAccount(), accTO.getAgency());
+		if(accTOt == null) throw new AccountNotFoundException();
+		
+		Account accNew = new Account(accTOt.getAgency(),
+						  accTOt.getAccount());
+		accNew.setBalance(accTOt.getBalance());
+		return accNew;
 	}
 	
 	public static Account newAccount(String ag, String acco, String pass) throws AccountNotFoundException,

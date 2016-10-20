@@ -31,13 +31,24 @@ public class JsonFacade {
 	}
 
 	public static AccountTO jsonToAccountTO(String json) throws IOException{
+		AccountTO accTO = null;
 		try{
 			JSONObject registro = new JSONObject(json);
-			AccountTO accTO = new AccountTO();
+			accTO = new AccountTO();
 			accTO.setAgency(registro.getString("agency"));
 			accTO.setAccount(registro.getString("account"));
 			accTO.setPassword(registro.getString("password"));
-			return accTO;
+		} catch(JSONException jsone){
+			jsone.printStackTrace();
+			//throw new IOException(jsone);
+		}
+		return accTO;
+	}
+	
+	public static double getOfJson(String json, String key) throws IOException{
+		try{
+			JSONObject registro = new JSONObject(json);
+			return registro.getDouble(key);
 		} catch(JSONException jsone){
 			jsone.printStackTrace();
 			throw new IOException(jsone);
